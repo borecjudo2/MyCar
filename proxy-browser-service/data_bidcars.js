@@ -1,0 +1,60 @@
+const data_bidcars = [
+    {
+        "number_trans": "Number",
+        "vin_trans": "VIN",
+        "milage_trans": "Milage",
+        "location_trans": "Location",
+        "miles_trans": "miles",
+        "prebid_closed_trans": "Past auctions",
+        "prebid_closed_info_trans": "Archived offer",
+        "sold_by_buy_now_trans": "Sold by Buy Now",
+        "buy_now_trans": "Buy Now",
+        "left_trans": "left",
+        "seller_trans": "Seller",
+        "final_bid_trans": "Final bid",
+        "document_trans": "Sale doc.",
+        "status_trans": "Status",
+        "damage_trans": "Damage",
+        "need_login_trans": "Log in to see the final bid",
+        "seller": "Plymouth Rock A...",
+        "has_video": true,
+        "has_360_view": true,
+        "see_price_trans": "See price",
+        "language": "en",
+        "name": "2020 Honda Civic, EX",
+        "tag": "2020-Honda-Civic-19XFC1F33LE215070",
+        "lot": "0-37881347",
+        "vin": "19XFC1F33LE215070",
+        "odometer": 46825,
+        "odometer_substr": 47,
+        "odometer_km_substr": 75,
+        "location": "Northern N... (NJ)",
+        "sale_document": "Salvage",
+        "sale_document_state": "New Jersey",
+        "sale_document_split": "Salvage (New Jersey)",
+        "loss_type": "Collision",
+        "primary_damage": "Rear",
+        "start_code": "Run and Drive",
+        "prebid_close_time": "Thu 11 January, 2024",
+        "time_left": 0,
+        "time_left_formatted": 0,
+        "prebid_price": "---",
+        "final_bid": 0,
+        "final_bid_formatted": "---",
+        "need_login": 0,
+        "buy_now_price": "$0",
+        "status": 0,
+        "watchlist": false,
+        "img": {
+            "img_1": "https://mercury.bid.cars/0-37881347/2020-Honda-Civic-19XFC1F33LE215070-1.jpg",
+            "img_2": "https://mercury.bid.cars/0-37881347/2020-Honda-Civic-19XFC1F33LE215070-2.jpg",
+            "img_3": "https://mercury.bid.cars/0-37881347/2020-Honda-Civic-19XFC1F33LE215070-3.jpg",
+            "img_4": "https://mercury.bid.cars/0-37881347/2020-Honda-Civic-19XFC1F33LE215070-4.jpg",
+            "img_5": "https://mercury.bid.cars/0-37881347/2020-Honda-Civic-19XFC1F33LE215070-5.jpg"
+        }
+    }
+]
+
+module.exports = {
+    data_bidcars
+}

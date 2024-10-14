@@ -1,0 +1,17 @@
+{
+  "name": "copart-parse-telegram-bot",
+  "version": "1.0.0",
+  "dependencies": {
+    "axios": "^1.6.8",
+    "body-parser": "^1.20.2",
+    "cheerio": "^1.0.0-rc.12",
+    "connect-timeout": "^1.9.0",
+    "express": "^4.19.2",
+    "express-http-proxy": "^2.0.0",
+    "puppeteer": "^22.8.2",
+    "winston": "^3.13.0"
+  },
+  "scripts": {
+    "start": "node bidcars-api.js"
+  }
+}
