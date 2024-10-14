@@ -1,3 +1,38 @@
+const {randomSleep} = require("./utils");
+const {sendRequest, getRequest, getRequestForHtmlPage} = require("./newClient")
+
+async function sendRequestToUrl(url) {
+    return (async () => {
+        return await sendRequest(url);
+    })();
+}
+
+async function getArchivedBidCarsByVin(vin) {
+    return (async () => {
+        const response = await getRequest(`https://bid.cars/app/search/en/vin-lot/${vin}/false`)
+        await randomSleep();
+
+        if (response && response.url) {
+            if (response.url.includes("search/archived")) {
+                return {
+                    "error": "This vin has more than 1 lot"
+                }
+            }
+
+            const $ = await getRequestForHtmlPage(response.url);
+            const data = getAllDetailsForArchivedBidcarsByHtml($);
+
+            return {
+                "data": data
+            }
+        }
+
+        return {
+            "error": "Can not access url"
+        }
+    })();
+}
+
 function getAllDetailsForArchivedBidcarsByHtml($) {
     const result = getDetails($);
     const fullPrice = getFullPrice($);
@@ -64,5 +99,6 @@ function getDetails($) {
 }
 
 module.exports = {
-    getAllDetailsForArchivedBidcarsByHtml
-}
+    getArchivedBidCarsByVin,
+    sendRequestToUrl
+};

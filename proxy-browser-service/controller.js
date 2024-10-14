@@ -1,8 +1,7 @@
 const logger = require("./logger");
 const PORT = 3003;
 
-const {getBidCars,getArchivedBidCarsByVin} = require("./client");
-const {randomSleep} = require("./utils");
+const {sendRequestToUrl, getArchivedBidCarsByVin} = require("./newService")
 const {app}  = require("./app");
 const {initMiddleware} = require("./middleware");
 
@@ -21,40 +20,17 @@ app.get("/bidcars/archived/:vin", async (req, res) => {
     }
 });
 
-app.get("/bidcars/:minYear/:maxYear/:minOdometer/:maxOdometer/:mark/:model", async (req, res) => {
-    try {
+app.post('/proxy', async (req, res) => {
+    const url = req.body.url;
 
-        const minYear = req.params.minYear;
-        const maxYear = req.params.maxYear;
-        const minOdometer = req.params.minOdometer;
-        const maxOdometer = req.params.maxOdometer;
-        const mark = req.params.mark;
-        const model = req.params.model;
-
-        let responseData = [];
-
-        for (let i = 1; i < 16; i++) {
-            const data = await getBidCars(i, minYear, maxYear, minOdometer, maxOdometer, mark, model);
-            logger.info(i);
-            logger.info(data.length);
-
-            responseData = responseData.concat(data);
-
-            logger.info(responseData.length);
-
-            if (data.length === 0) {
-                break;
-            }
-            await randomSleep();
-        }
-
-        logger.info("responseData = " + responseData.length);
-        logger.info(responseData)
-        res.json(responseData);
-    } catch (e) {
-        logger.error(e);
-        res.status(500).send('Something broke!');
+    if (!url) {
+        return res.status(404).json({error: 'URL is required in the request body'});
     }
+
+    const responseData = await sendRequestToUrl(url);
+
+    logger.info(responseData)
+    res.json(responseData);
 });
 
 app.listen(PORT, () =>
