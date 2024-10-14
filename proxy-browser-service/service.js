@@ -1,9 +1,3 @@
-function getDetailsForArchivedBidcarsByHtml($, status) {
-    const result = getDetails($);
-    result["price"] = getPrice($, status);
-    return result;
-}
-
 function getAllDetailsForArchivedBidcarsByHtml($) {
     const result = getDetails($);
     const fullPrice = getFullPrice($);
@@ -11,23 +5,6 @@ function getAllDetailsForArchivedBidcarsByHtml($) {
     result["priceNotSold"] = fullPrice["Not sold"];
     result["priceNoInfo"] = fullPrice["No information"];
     return result;
-}
-
-function getPrice($, status) {
-    const salesHistoryItems = $('tr[style="cursor: pointer"]');
-    let price = "";
-
-    salesHistoryItems.each(function () {
-        const salesHistoryItem = $(this);
-        const statusSoldSpan = salesHistoryItem.find(`span.status.${status}`);
-
-        if (statusSoldSpan.length > 0) {
-            const priceSpan = salesHistoryItem.find('span.status.price');
-            price = priceSpan.text().trim(); // Assuming the price is text inside the span
-        }
-    });
-
-    return price;
 }
 
 function getFullPrice($) {
@@ -87,6 +64,5 @@ function getDetails($) {
 }
 
 module.exports = {
-    getDetailsForArchivedBidcarsByHtml,
     getAllDetailsForArchivedBidcarsByHtml
 }
