@@ -1,5 +1,4 @@
-const {randomSleep} = require("./utils");
-const {sendRequest, getRequest, getRequestForHtmlPage} = require("./newClient")
+const {sendRequest, getHtmlData} = require("./newClient")
 
 async function sendRequestToUrl(url) {
     return (async () => {
@@ -9,26 +8,21 @@ async function sendRequestToUrl(url) {
 
 async function getArchivedBidCarsByVin(vin) {
     return (async () => {
-        const response = await getRequest(`https://bid.cars/app/search/en/vin-lot/${vin}/false`)
-        await randomSleep();
+        const response = await sendRequestToUrl(`https://bid.cars/app/search/en/vin-lot/${vin}/false`)
 
-        if (response && response.url) {
-            if (response.url.includes("search/archived")) {
-                return {
-                    "error": "This vin has more than 1 lot"
-                }
-            }
-
-            const $ = await getRequestForHtmlPage(response.url);
-            const data = getAllDetailsForArchivedBidcarsByHtml($);
-
-            return {
-                "data": data
-            }
+        if (!response || !response.url) {
+            throw new Error("Can not access url");
         }
 
+        if (response.url.includes("search/archived")) {
+            throw new Error("This vin has more than 1 lot");
+        }
+
+        const html = await getHtmlData(response.url);
+        const data = getAllDetailsForArchivedBidcarsByHtml(html);
+
         return {
-            "error": "Can not access url"
+            "data": data
         }
     })();
 }
@@ -78,16 +72,24 @@ function getDetails($) {
                 const faIconClass = faIcon.attr('class');
 
                 airbagInfo[spanText] = faIconClass.trim()
-                        .replace("fa", "")
-                        .replace("fa-", "")
-                        .replace(" ", "")
-                    || '';
+                                .replace("fa", "")
+                                .replace("fa-", "")
+                                .replace(" ", "")
+                        || '';
             });
 
             result[optionText] = airbagInfo;
         }
 
-        if (optionText && optionText !== "photos" && optionText !== "vin" && optionText !== "airbag_checked" && optionText !== "odometer") {
+        if (optionText
+                && optionText
+                !== "photos"
+                && optionText
+                !== "vin"
+                && optionText
+                !== "airbag_checked"
+                && optionText
+                !== "odometer") {
             const value = $(element).find('.right-info').text().trim();
             if (value) {
                 result[optionText] = value;
