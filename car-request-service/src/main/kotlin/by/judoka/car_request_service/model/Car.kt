@@ -18,5 +18,5 @@ class Car(
     var avByMake: String = "",
     var avByModel: String = "",
 
-    var followData: ArrayList<FollowCarData> = ArrayList()
+    var followData: List<FollowCarData> = ArrayList()
 )

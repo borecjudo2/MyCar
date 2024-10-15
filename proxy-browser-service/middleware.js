@@ -11,11 +11,6 @@ function initMiddleware(app) {
         Promise.resolve(fn(req, res, next)).catch(next);
       };
 
-      // Example route using asyncHandler
-      app.get('/data', asyncHandler(async (req, res, next) => {
-          throw new Error('Parameter is not a number!');
-      }));
-
       // Global error handler middleware (same as before)
       app.use((err, req, res, next) => {
         console.error(err.stack);

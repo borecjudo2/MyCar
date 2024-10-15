@@ -1,0 +1,6 @@
+server:
+  port : 8081
+
+clients:
+  carRequestServiceUrl: "http://localhost:8080"
+  proxyServiceUrl: "http://localhost:3003"

@@ -35,8 +35,12 @@ class CarsServiceImpl(
         userService.getUserById(followCarData.userId)
         val existingCar = getCarById(id)
 
-        existingCar.followData.add(followCarData)
+        existingCar.followData.plus(followCarData)
 
         carRepository.save(existingCar)
+    }
+
+    override fun getAllFollowedCarsRequest(): List<Car> {
+        return carRepository.findCarsWithFollowData()
     }
 }

@@ -38,6 +38,11 @@ class CarsController(
         return carsService.getAllCars()
     }
 
+    @GetMapping("/followed")
+    @ResponseStatus(HttpStatus.OK)
+    fun getAllFollowedCarsRequest(): List<Car> {
+        return carsService.getAllFollowedCarsRequest()
+    }
 
     @PostMapping("/{id}/follow")
     @ResponseStatus(HttpStatus.NO_CONTENT)

@@ -8,10 +8,13 @@ import by.judoka.car_request_service.repo.UserRepository
 import jakarta.annotation.PostConstruct
 import org.springframework.core.env.Environment
 import org.springframework.stereotype.Service
+import java.util.Collections
 import java.util.UUID
 
 private const val USER_ID = "51129080-24ad-4f62-92c6-a37018ecef21"
-private const val CAR_ID = "51129080-24ad-4f62-92c6-a37018ecef76"
+private const val CAR_ID = "51129080-24ad-4f62-92c6-a37018ecef70"
+private const val CAR_ID_1 = "51129080-24ad-4f62-92c6-a37018ecef71"
+private const val CAR_ID_2 = "51129080-24ad-4f62-92c6-a37018ecef72"
 
 @Service
 class LocalDbMigration(
@@ -27,13 +30,32 @@ class LocalDbMigration(
                 User(UUID.fromString(USER_ID))
             )
 
-            carRepository.save(
+            val cars = mutableListOf(
                 Car(
                     id = UUID.fromString(CAR_ID),
-                    make = "VW",
-                    model = "GTI",
-                    bidCarsMake = "VW",
-                    bidCarsModel = "GTI",
+                    make = "Volkswagen",
+                    model = "Golf Gti",
+                    bidCarsMake = "Volkswagen",
+                    bidCarsModel = "Golf Gti",
+                    avByMake = "234",
+                    avByModel = "345",
+                    followData = arrayListOf(
+                        FollowCarData(
+                            userId = UUID.fromString(USER_ID),
+                            runStatus = "Run and Drive",
+                            yearFrom = 2020,
+                            yearTo = 2022,
+                            driveType = 1,
+                            engineCapacity = 2000
+                        )
+                    )
+                ),
+                Car(
+                    id = UUID.fromString(CAR_ID_1),
+                    make = "BMW",
+                    model = "4 Series",
+                    bidCarsMake = "BMW",
+                    bidCarsModel = "4 Series",
                     avByMake = "234",
                     avByModel = "345",
                     followData = arrayListOf(
@@ -46,8 +68,21 @@ class LocalDbMigration(
                             engineCapacity = 2000
                         )
                     )
+                ),
+
+                Car(
+                    id = UUID.fromString(CAR_ID_2),
+                    make = "BMW",
+                    model = "3 Series",
+                    bidCarsMake = "BMW",
+                    bidCarsModel = "3 Series",
+                    avByMake = "234",
+                    avByModel = "345",
+                    followData = arrayListOf()
                 )
             )
+
+            carRepository.saveAll(cars)
         }
 
     }

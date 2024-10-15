@@ -13,4 +13,6 @@ interface CarsService {
     fun getAllCars(): List<Car>
 
     fun followCar(id: UUID, followCarData: FollowCarData)
+
+    fun getAllFollowedCarsRequest() : List<Car>
 }
