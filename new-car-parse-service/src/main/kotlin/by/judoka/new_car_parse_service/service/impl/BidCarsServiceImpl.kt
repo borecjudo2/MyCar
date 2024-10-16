@@ -1,10 +1,15 @@
 package by.judoka.new_car_parse_service.service.impl
 
 import by.judoka.new_car_parse_service.client.ProxyServiceClient
+import by.judoka.new_car_parse_service.mapper.mapToCar
+import by.judoka.new_car_parse_service.model.dao.Car
 import by.judoka.new_car_parse_service.model.proxy.bidcars.BidCarsCar
 import by.judoka.new_car_parse_service.model.proxy.bidcars.ProxyPostRequest
 import by.judoka.new_car_parse_service.model.request.CarRequestServiceResponse
 import by.judoka.new_car_parse_service.service.BidCarsService
+import by.judoka.new_car_parse_service.service.CarService
+import org.slf4j.Logger
+import org.slf4j.LoggerFactory
 import org.springframework.stereotype.Service
 import kotlin.streams.asSequence
 
@@ -19,8 +24,11 @@ private val BID_CARS_NEW_CARS_URL = "https://bid.cars/app/search/request?" +
 
 @Service
 class BidCarsServiceImpl(
-    private val proxyServiceClient: ProxyServiceClient
+    private val proxyServiceClient: ProxyServiceClient,
+    private val carService: CarService,
 ) : BidCarsService {
+
+    private val log: Logger = LoggerFactory.getLogger(BidCarsServiceImpl::class.java)
 
     override suspend fun getNewCarsFromBidCars(carRequest: CarRequestServiceResponse): List<BidCarsCar> {
         val newCars = mutableListOf<BidCarsCar>()
@@ -42,6 +50,16 @@ class BidCarsServiceImpl(
         }
 
         return newCars
+    }
+
+    override fun saveCarToDb(car: BidCarsCar) {
+        try {
+            val carToSave = car.mapToCar()
+            val saveCar: Car = carService.saveCar(carToSave)
+            log.info(saveCar.toString())
+        } catch (exception: Exception) {
+            log.error(exception.localizedMessage, exception.printStackTrace())
+        }
     }
 
     private fun prepareUrl(carRequest: CarRequestServiceResponse, pageNumber: Int): String {

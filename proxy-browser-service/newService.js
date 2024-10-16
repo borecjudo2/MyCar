@@ -30,9 +30,9 @@ async function getArchivedBidCarsByVin(vin) {
 function getAllDetailsForArchivedBidcarsByHtml($) {
     const result = getDetails($);
     const fullPrice = getFullPrice($);
-    result["price"] = fullPrice["Sold"];
-    result["priceNotSold"] = fullPrice["Not sold"];
+    result["priceSold"] = fullPrice["Sold"];
     result["priceNoInfo"] = fullPrice["No information"];
+    result["priceNotSold"] = fullPrice["Not sold"];
     return result;
 }
 

@@ -5,13 +5,13 @@ import org.springframework.context.annotation.Profile
 import org.springframework.scheduling.annotation.Scheduled
 import org.springframework.stereotype.Component
 
-@Profile("!local")
+@Profile("local")
 @Component
-class ParseScheduler(
+class ParseSchedulerLocal(
     private var parserService: ParserService
 ) {
 
-    @Scheduled(cron = "0 */12 * * *", zone = "Europe/Minsk")
+    @Scheduled(fixedDelay = 10000000, zone = "Europe/Minsk")
     suspend fun startParseNewCars() {
         parserService.parseNewCars()
     }

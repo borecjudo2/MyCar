@@ -5,7 +5,7 @@ import org.springframework.data.mongodb.core.mapping.Document
 import java.util.UUID
 import kotlin.collections.ArrayList
 
-@Document("cars")
+@Document("car-request")
 class Car(
     @Id var id: UUID = UUID.randomUUID(),
 

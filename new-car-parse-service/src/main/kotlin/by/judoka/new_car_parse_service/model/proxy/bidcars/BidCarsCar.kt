@@ -32,9 +32,9 @@ data class BidCarsCar(
     @JsonProperty("prebid_price")
     var prebidPrice: String? = null,
     @JsonProperty("final_bid")
-    var finalBid: Any? = null,
+    var finalBid: String? = null,
     @JsonProperty("buy_now_price")
-    var buyNowPrice: Any? = null,
+    var buyNowPrice: String? = null,
     @JsonProperty("estimated_min")
     var estimatedMin: Int = 0,
     @JsonProperty("estimated_max")
