@@ -15,6 +15,7 @@ class ParserServiceImpl(
         carsRequestServiceClient.getAllFollowedCarsRequest().forEach {
             try {
                 val newCarsFromBidCars = bidCarsService.getNewCarsFromBidCars(it)
+                println(newCarsFromBidCars)
                 // TODO: impl
 
             }catch (exception: Exception) {

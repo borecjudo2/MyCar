@@ -2,25 +2,25 @@ const logger = require("./logger");
 const PORT = 3003;
 
 const {sendRequestToUrl, getArchivedBidCarsByVin} = require("./newService")
-const {app}  = require("./app");
-const {initMiddleware} = require("./middleware");
+const {app} = require("./app");
+const {initMiddleware, asyncHandler} = require("./middleware");
 
 initMiddleware(app);
 
-app.get("/bidcars/archived/:vin", async (req, res) => {
-    try {
-        const vin = req.params.vin;
+app.get("/bidcars/archived/:vin", asyncHandler(async (req, res, next) => {
+    const vin = req.params.vin;
 
-        let car = await getArchivedBidCarsByVin(vin);
-        logger.info(car)
-        res.json(car);
-    } catch (e) {
-        logger.error(e);
-        res.status(500).send('Something broke!');
+    if (!vin) {
+        return res.status(404).json({error: 'VIN is required'});
     }
-});
 
-app.post('/proxy', async (req, res) => {
+    let car = await getArchivedBidCarsByVin(vin);
+    logger.info(car);
+    res.json(car);
+}));
+
+// Маршрут POST /proxy
+app.post('/proxy', asyncHandler(async (req, res, next) => {
     const url = req.body.url;
 
     if (!url) {
@@ -29,10 +29,10 @@ app.post('/proxy', async (req, res) => {
 
     const responseData = await sendRequestToUrl(url);
 
-    logger.info(responseData)
+    logger.info(responseData);
     res.json(responseData);
-});
+}));
 
 app.listen(PORT, () =>
-    logger.info(`Server running on http://localhost:${PORT}`)
+        logger.info(`Server running on http://localhost:${PORT}`)
 );
