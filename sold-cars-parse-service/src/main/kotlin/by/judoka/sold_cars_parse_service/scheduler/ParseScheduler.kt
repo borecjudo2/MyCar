@@ -10,7 +10,7 @@ class ParseScheduler(
 ) {
 
     //    @Scheduled(fixedDelay = 10000000, zone = "Europe/Minsk")
-    @Scheduled(cron = "0 0 0/12 * * ?", zone = "Europe/Minsk")
+    @Scheduled(cron = "0 55 0/6 * * ?", zone = "Europe/Minsk")
     suspend fun startToGetFinalPriceForSoldCars() {
         parserService.startToGetFinalPriceForSoldCars()
     }
