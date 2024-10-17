@@ -1,0 +1,1 @@
+org.springframework.context.ApplicationContextInitializer=by.judoka.sold_cars_parse_service.local.spring.MongodbLocalApplicationContextInitializer
